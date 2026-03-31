@@ -3,53 +3,53 @@
     {
       "name": "Angels & Airwaves",
       "genre": "alt-rock",
-      "cover": "Setlist/Angels & Airwaves/Angels & Airwaves.jpg",
+      "cover": "Angels & Airwaves/Angels & Airwaves.jpg",
       "albums": [
         {
           "title": "I-Empire",
-          "cover": "Setlist/Angels & Airwaves/I-Empire/I-Empire.jpg",
-          "path": "Setlist/Angels & Airwaves/I-Empire/"
+          "cover": "Angels & Airwaves/I-Empire/I-Empire.jpg",
+          "path": "Angels & Airwaves/I-Empire/"
         },
         {
           "title": "We Don't Need To Whisper",
-          "cover": "Setlist/Angels & Airwaves/We Don't Need To Whisper/We Don't Need To Whisper.jpg",
-          "path": "Setlist/Angels & Airwaves/We Don't Need To Whisper/"
+          "cover": "Angels & Airwaves/We Don't Need To Whisper/We Don't Need To Whisper.jpg",
+          "path": "Angels & Airwaves/We Don't Need To Whisper/"
         }
       ]
     },
     {
       "name": "Blink-182",
       "genre": "alt-rock",
-      "cover": "Setlist/Blink-182/Blink-182.jpg",
+      "cover": "Blink-182/Blink-182.jpg",
       "albums": [
         {
           "title": "Take Off Your Pants and Jacket",
-          "cover": "Setlist/Blink-182/Take Off Your Pants and Jacket/Take Off Your Pants and Jacket.jpg",
-          "path": "Setlist/Blink-182/Take Off Your Pants and Jacket/"
+          "cover": "Blink-182/Take Off Your Pants and Jacket/Take Off Your Pants and Jacket.jpg",
+          "path": "Blink-182/Take Off Your Pants and Jacket/"
         }
       ]
     },
     {
       "name": "Roxette",
       "genre": "pop-rock",
-      "cover": "Setlist/Roxette/Roxette.jpg",
+      "cover": "Roxette/Roxette.jpg",
       "albums": [
         {
           "title": "Look Sharp!",
-          "cover": "Setlist/Roxette/Look Sharp!/Look Sharp!.jpg",
-          "path": "Setlist/Roxette/Look Sharp!/"
+          "cover": "Roxette/Look Sharp!/Look Sharp!.jpg",
+          "path": "Roxette/Look Sharp!/"
         }
       ]
     },
     {
       "name": "The Pretenders",
       "genre": "pop-rock",
-      "cover": "Setlist/The Pretenders/The Pretenders.jpg",
+      "cover": "The Pretenders/The Pretenders.jpg",
       "albums": [
         {
           "title": "Pretenders",
-          "cover": "Setlist/The Pretenders/Pretenders/Pretenders.jpg",
-          "path": "Setlist/The Pretenders/Pretenders/"
+          "cover": "The Pretenders/Pretenders/Pretenders.jpg",
+          "path": "The Pretenders/Pretenders/"
         }
       ]
     }
