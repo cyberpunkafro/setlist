@@ -1116,7 +1116,6 @@ body.home #main-area {
     overflow-y: auto;     /* keep vertical scrolling */
   }
 
-  /* Prevent children from forcing overflow */
   .tab-content img,
   .tab-content span {
     max-width: 100%;      /* scale down if too wide */
