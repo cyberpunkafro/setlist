@@ -1,1 +1,57 @@
-
+{
+  "bands": [
+    {
+      "name": "Angels & Airwaves",
+      "genre": "alt-rock",
+      "cover": "Angels & Airwaves/Angels & Airwaves.jpg",
+      "albums": [
+        {
+          "title": "I-Empire",
+          "cover": "Angels & Airwaves/I-Empire/I-Empire.jpg",
+          "path": "Angels & Airwaves/I-Empire/"
+        },
+        {
+          "title": "We Don't Need To Whisper",
+          "cover": "Angels & Airwaves/We Don't Need To Whisper/We Don't Need To Whisper.jpg",
+          "path": "Angels & Airwaves/We Don't Need To Whisper/"
+        }
+      ]
+    },
+    {
+      "name": "Blink-182",
+      "genre": "alt-rock",
+      "cover": "Blink-182/Blink-182.jpg",
+      "albums": [
+        {
+          "title": "Take Off Your Pants and Jacket",
+          "cover": "Blink-182/Take Off Your Pants and Jacket/Take Off Your Pants and Jacket.jpg",
+          "path": "Blink-182/Take Off Your Pants and Jacket/"
+        }
+      ]
+    },
+    {
+      "name": "Roxette",
+      "genre": "pop-rock",
+      "cover": "Roxette/Roxette.jpg",
+      "albums": [
+        {
+          "title": "Look Sharp!",
+          "cover": "Roxette/Look Sharp!/Look Sharp!.jpg",
+          "path": "Roxette/Look Sharp!/"
+        }
+      ]
+    },
+    {
+      "name": "The Pretenders",
+      "genre": "pop-rock",
+      "cover": "The Pretenders/The Pretenders.jpg",
+      "albums": [
+        {
+          "title": "Pretenders",
+          "cover": "The Pretenders/Pretenders/Pretenders.jpg",
+          "path": "The Pretenders/Pretenders/"
+        }
+      ]
+    }
+  ]
+}
