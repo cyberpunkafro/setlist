@@ -284,7 +284,10 @@ body.home #main-area {
 
 .tab-content {
   padding: 16px;
+  overflow-x: hidden;   /* ✅ hides horizontal scrollbar */
+  overflow-y: auto;     /* keep vertical scrolling */
 }
+
 
 /* =========================================================
    TRACK / RELATED / ALBUM ITEMS
@@ -1104,5 +1107,20 @@ body.home #main-area {
   #track-video {
     display: none !important;
     visibility: hidden !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .tab-content {
+    overflow-x: hidden;   /* ✅ hides horizontal scrollbar */
+    overflow-y: auto;     /* keep vertical scrolling */
+  }
+
+  /* Prevent children from forcing overflow */
+  .tab-content img,
+  .tab-content span {
+    max-width: 100%;      /* scale down if too wide */
+    white-space: normal;  /* allow wrapping instead of overflow */
+    word-break: break-word;
   }
 }
