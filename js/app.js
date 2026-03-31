@@ -62,38 +62,44 @@ function showTab(id) {
     "related": "tab-related"
   };
 
+  // Reset tab button states
   document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
   const btnId = map[id];
   if (btnId) document.getElementById(btnId)?.classList.add("active");
 
+  // Reset tab content visibility
   document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
   document.getElementById(id)?.classList.remove("hidden");
 
   const t = currentPlaylist[currentIndex];
   const isVideo = t && t.file.toLowerCase().endsWith(".mp4");
 
-  // Lyrics tab → hide video visually but keep playback alive
+  // Lyrics tab → show lyrics, hide video visually but keep playback alive
   if (id === "lyrics-sidebar" && isVideo) {
     loadLyricsForCurrentTrack();
+    document.getElementById("lyrics-sidebar").classList.remove("hidden");
 
-    if (isMobile()) {
-      trackVideo.classList.add("hidden"); // visually hidden
-      document.getElementById("album-cover-img").classList.remove("hidden");
-    } else {
-      albumVideo.classList.add("hidden"); // visually hidden
-      document.getElementById("album-cover-img").classList.remove("hidden");
-    }
-    // important: do NOT pause or clear src here
-    document.getElementById("lyrics-sidebar").scrollTop = 0;
-  }
-
-  // Related tab → hide video area
-  if (id === "related" && isVideo) {
     if (isMobile()) {
       trackVideo.classList.add("hidden");
+      trackVideo.style.display = "none";
       document.getElementById("album-cover-img").classList.remove("hidden");
     } else {
       albumVideo.classList.add("hidden");
+      albumVideo.style.display = "none"; // ✅ force hidden on desktop
+      document.getElementById("album-cover-img").classList.remove("hidden");
+    }
+    document.getElementById("lyrics-sidebar").scrollTop = 0;
+  }
+
+  // Related tab → always hide video on desktop (no blank box)
+  if (id === "related") {
+    if (isMobile()) {
+      trackVideo.classList.add("hidden");
+      trackVideo.style.display = "none";
+      document.getElementById("album-cover-img").classList.remove("hidden");
+    } else {
+      albumVideo.classList.add("hidden");
+      albumVideo.style.display = "none"; // ✅ ensure gone
       document.getElementById("album-cover-img").classList.remove("hidden");
     }
     document.getElementById("tracks").scrollTop = 0;
@@ -106,20 +112,24 @@ function showTab(id) {
       // browsing mode → hide video
       if (isMobile()) {
         trackVideo.classList.add("hidden");
+        trackVideo.style.display = "none";
         document.getElementById("album-cover-img").classList.remove("hidden");
       } else {
         albumVideo.classList.add("hidden");
+        albumVideo.style.display = "none"; // ✅ keep hidden until playback
         document.getElementById("album-cover-img").classList.remove("hidden");
       }
     } else {
       // playback mode → show video again
       if (isMobile()) {
         trackVideo.classList.remove("hidden");
+        trackVideo.style.display = "block";
         trackVideo.style.opacity = "1";
         trackVideo.style.pointerEvents = "auto";
         document.getElementById("album-cover-img").classList.add("hidden");
       } else {
         albumVideo.classList.remove("hidden");
+        albumVideo.style.display = "block"; // ✅ only show when playing
         albumVideo.style.opacity = "1";
         albumVideo.style.pointerEvents = "auto";
         document.getElementById("album-cover-img").classList.add("hidden");
@@ -670,30 +680,37 @@ function playTrack(albumPath, file, albumCover, bandName) {
   video.muted = false;
   trackVideo.muted = false;
 
+  // ✅ Always load lyrics for the current track
+  loadLyricsForCurrentTrack();
+  document.getElementById("lyrics-sidebar").scrollTop = 0;
+
   /* ============================================================
      MOBILE VIDEO → injected player only
      ============================================================ */
-  if (isMobile() && isVideo) {
-    // Stop footer audio + video
-    audio.pause();
-    audio.classList.add("hidden");
-    audio.removeAttribute("src");
+ if (isMobile() && isVideo) {
+  audio.pause();
+  audio.classList.add("hidden");
+  audio.removeAttribute("src");
 
-    video.pause();
-    video.classList.add("hidden");
-    video.removeAttribute("src");
+  video.pause();
+  video.classList.add("hidden");
+  video.removeAttribute("src");
 
-    // Play injected video
-    trackVideo.src = albumPath + file;
-    trackVideo.muted = false;
-    trackVideo.play()
-      .then(() => playPauseBtn.classList.add("playing"))
-      .catch(() => {});
+  // ✅ show mobile video
+  trackVideo.classList.remove("hidden");
+  trackVideo.style.display = "block";
+  trackVideo.style.visibility = "visible";
 
-    mediaImg.classList.add("hidden");
-    scrollVideoIntoView();
+  trackVideo.src = albumPath + file;
+  trackVideo.muted = false;
+  trackVideo.play()
+    .then(() => playPauseBtn.classList.add("playing"))
+    .catch(() => {});
+  
+  mediaImg.classList.add("hidden");
+  scrollVideoIntoView();
+ 
 
-    // ✅ Rebind footer button to trackVideo
     playPauseBtn.onclick = () => {
       if (trackVideo.paused) {
         trackVideo.play();
@@ -704,23 +721,49 @@ function playTrack(albumPath, file, albumCover, bandName) {
       }
     };
 
-    // Keep button state synced
     trackVideo.addEventListener("play", () => playPauseBtn.classList.add("playing"));
     trackVideo.addEventListener("pause", () => playPauseBtn.classList.remove("playing"));
+    trackVideo.addEventListener("ended", () => {
+      trackVideo.style.display = "none";
+      trackVideo.style.visibility = "hidden";
+      mediaImg.classList.remove("hidden");
+      playPauseBtn.classList.remove("playing");
+    });
 
     highlightCurrentTrackGlobal();
     return;
   }
 
   /* ============================================================
-     DESKTOP VIDEO OR ANY AUDIO
+     MOBILE AUDIO MODE
+     ============================================================ */
+  if (isMobile() && !isVideo) {
+    mediaImg.classList.remove("hidden");
+    mediaImg.src = albumCover;
+
+    audio.classList.remove("hidden");
+    audio.src = albumPath + file;
+    audio.muted = false;
+
+    audio.play()
+      .then(() => playPauseBtn.classList.add("playing"))
+      .catch(() => {});
+
+    video.style.display = "none";
+    video.style.visibility = "hidden";
+
+    highlightCurrentTrackGlobal();
+    return;
+  }
+
+  /* ============================================================
+     DESKTOP VIDEO OR AUDIO
      ============================================================ */
   audio.pause();
   audio.classList.add("hidden");
   audio.removeAttribute("src");
 
   video.pause();
-  video.classList.add("hidden");
   video.removeAttribute("src");
 
   /* -------------------------
@@ -728,7 +771,12 @@ function playTrack(albumPath, file, albumCover, bandName) {
      ------------------------- */
   if (isVideo) {
     mediaImg.classList.add("hidden");
+
+    // ✅ force video visible
     video.classList.remove("hidden");
+    video.style.removeProperty("display"); // clear CSS hidden
+    video.style.display = "block";
+    video.style.visibility = "visible";
 
     video.src = albumPath + file;
     video.muted = false;
@@ -737,12 +785,19 @@ function playTrack(albumPath, file, albumCover, bandName) {
       .then(() => playPauseBtn.classList.add("playing"))
       .catch(() => {});
 
+    video.addEventListener("ended", () => {
+      video.style.display = "none";
+      video.style.visibility = "hidden";
+      mediaImg.classList.remove("hidden");
+      playPauseBtn.classList.remove("playing");
+    });
+
     highlightCurrentTrackGlobal();
     return;
   }
 
   /* -------------------------
-     AUDIO MODE
+     DESKTOP AUDIO MODE
      ------------------------- */
   mediaImg.classList.remove("hidden");
   mediaImg.src = albumCover;
@@ -755,8 +810,20 @@ function playTrack(albumPath, file, albumCover, bandName) {
     .then(() => playPauseBtn.classList.add("playing"))
     .catch(() => {});
 
+  // ✅ Refresh lyrics for audio tracks too
+  loadLyricsForCurrentTrack();
+  document.getElementById("lyrics-sidebar").classList.remove("hidden");
+  document.getElementById("lyrics-sidebar").scrollTop = 0;
+
+  // Auto-hide video if switching from video to audio
+  video.style.display = "none";
+  video.style.visibility = "hidden";
+  mediaImg.classList.remove("hidden");
+
   highlightCurrentTrackGlobal();
 }
+
+
 
 
 /* ---------------------------------------------------------
