@@ -1,8 +1,6 @@
 @echo off
-:: IMPORTANT: This .bat must be inside the Setlist\ folder
 setlocal enabledelayedexpansion
 
-:: Root folder is the current folder (where this .bat lives)
 set "root=%~dp0"
 set "json=%root%Setlist.json"
 
@@ -75,6 +73,6 @@ echo }
 ) >> "%json%"
 
 echo.
-echo Done! JSON and setlist.txt files generated.
+echo
 pause
 
