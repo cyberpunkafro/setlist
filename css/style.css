@@ -750,6 +750,41 @@ body.home #main-area {
   box-shadow: 0 0 26px rgba(255,255,255,0.25);
 }
 
+/* Default: hide both */
+#album-video,
+#track-video {
+  display: none;
+  visibility: hidden;
+}
+
+/* Desktop: only album-video can be shown */
+@media (min-width: 768px) {
+  #track-video {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Mobile: only track-video can be shown */
+@media (max-width: 767px) {
+  #album-video {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #track-video {
+    display: block;
+    visibility: visible;
+    width: 100%;   /* ensure it fills container */
+    height: auto;  /* keep aspect ratio */
+    background: black; /* avoid blank white box */
+  }
+}
+
+
+
 /* =========================================================
    MOBILE LAYOUT — FINAL FIX (NO SIDEBAR ON HOME, NO LEFT GAP)
 ========================================================= */
@@ -1062,5 +1097,12 @@ body.home #main-area {
   .track-item.playing:hover,
   .related-item.playing:hover {
     background-color: #333 !important;
+  }
+}
+
+/* Hide mobile video player on desktop */
+  #track-video {
+    display: none !important;
+    visibility: hidden !important;
   }
 }
