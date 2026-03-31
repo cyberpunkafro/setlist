@@ -20,11 +20,11 @@
     {
   "name": "Blink-182",
   "genre": "alt-rock",
-  "cover": "Blink-182/Blink-182.jpeg",
+  "cover": "Blink-182/Blink-182.jpg",
   "albums": [
     {
       "title": "Take Off Your Pants And Jacket",
-      "cover": "Blink-182/Take Off Your Pants And Jacket/Take Off Your Pants And Jacket.jpeg",
+      "cover": "Blink-182/Take Off Your Pants And Jacket/Take Off Your Pants And Jacket.jpg",
       "path": "Blink-182/Take Off Your Pants And Jacket/"
     }
   ]
